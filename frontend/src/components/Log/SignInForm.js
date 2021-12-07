@@ -34,7 +34,7 @@ const SignInForm = () => {
 
   return (
     <form action="" onSubmit={handleLogin} id="sign-up-form">
-      <label htmlFor="email">Email</label>
+      <label htmlFor="email">E-mail</label>
       <br />
       <input
         type="text"
@@ -45,7 +45,7 @@ const SignInForm = () => {
       />
       <div className="email error"></div>
       <br />
-      <label htmlFor="password">Password</label>
+      <label htmlFor="password">Mot de passe</label>
       <br />
       <input
         type="password"
