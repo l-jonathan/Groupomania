@@ -1,15 +1,23 @@
-import React from 'react';
-import Log from '../components/Log';
+import React, { useContext } from "react";
+import Log from "../components/Log";
+import { UidContext } from "../components/AppContext";
+import UpdateProfil from "../components/Profil/UpdateProfil";
 
 const Profil = () => {
+  const uid = useContext(UidContext);
+
   return (
     <div className="profil-page">
+      {uid ? (
+        <UpdateProfil />
+      ) : (
         <div className="log-container">
-            <Log />
-            <div className="img-container">
-                <img src="./img/icon.png" alt="img-log" />
-            </div>
+          <Log signin={false} signup={true} />
+          <div className="img-container">
+            <img src="./img/icon.svg" alt="logo groupomania" />
+          </div>
         </div>
+      )}
     </div>
   );
 };

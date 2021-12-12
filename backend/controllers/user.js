@@ -12,6 +12,9 @@ const db = require("../models/index");
 // Importation modèle User
 const { User } = db.sequelize.models;
 
+// Temps du token (à supprimer possiblement)
+const maxAge = 3 * 24 * 60 * 60 * 1000;
+
 // Obtain all users
 module.exports.getAllUsers = async (req, res) => {
   try {
@@ -23,20 +26,39 @@ module.exports.getAllUsers = async (req, res) => {
 };
 
 // Obtain one users
-module.exports.getOneUser = async (req, res) => {
-  try {
-    const user = await db.User.findOne({
-      where: { id: req.params.id },
-    });
-    if (user) {
-      res.status(200).send(user);
-    } else {
-      res.status(404).json({ error: "Utilisateur non trouvé" });
-    }
-    
-  } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
-  }
+module.exports.getActualUser = async (req, res) => {
+  const userId = token.getUserId(req);
+  console.log("userId getActualUser: "+userId);
+
+  db.User.findOne({
+    where: { id: userId },
+  })
+    .then((userFound) => {
+      res.status(200).json({ message: "Utilisateur trouvé" });
+      console.log(userFound);
+      return userFound;
+    })
+    .catch((error) =>
+      res.status(500).json({ error: "Utilisateur non trouvé !" })
+    );
+};
+
+// Obtain one users
+module.exports.getUser = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  db.User.findOne({
+    where: { id: userId },
+  })
+    .then((userFound) => {
+      return res.status(200).json(userFound);
+      //console.log(userFound);
+      //return userFound;
+    })
+    .catch((error) =>
+      res.status(500).json({ error: "Utilisateur non trouvé !" })
+    );
 };
 
 // fonction pour enregistrement de nouveaux utilisateurs
@@ -95,6 +117,7 @@ exports.login = async (req, res) => {
         return res.status(401).send({ error: "Mot de passe incorrect !" });
       } else {
         const tokenObject = await token.issueJWT(user);
+        res.cookie("jwt", tokenObject.token, { httpOnly: true, maxAge });
         res.status(200).send({
           // on renvoie le user et le token
           user: user,
@@ -106,16 +129,15 @@ exports.login = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log("6");
+    console.log(error);
     return res.status(500).send({ error: "Erreur serveur" });
   }
 };
 
 // Modify one user
 module.exports.updateUser = async (req, res) => {
-  const userId = token.getUserId(req);
+  const userId = req.params.id;
 
-  console.log("bodyUser", req.body.user);
   const userObject = req.file
     ? {
         ...JSON.parse(req.body.user),
@@ -159,10 +181,15 @@ exports.deleteUser = async (req, res) => {
   db.User.findOne({
     where: { id: userId },
   })
-  
+
     .then((userFound) => {
-      console.log("utilisateur trouvé:" + userFound.firstName + " id params" + req.params.id);
-      if (userFound && (req.params.id == userId)) {
+      console.log(
+        "utilisateur trouvé:" +
+          userFound.firstName +
+          " id params" +
+          req.params.id
+      );
+      if (userFound && req.params.id == userId) {
         db.User.destroy({ where: { id: userId } }); // on supprime le compte
         res
           .status(200)
@@ -183,13 +210,14 @@ exports.deleteUser = async (req, res) => {
       }
     })
     .catch((error) =>
-       res.status(500).json({ error: "⚠ Oops, une erreur s'est produite ! " + error })
+      res
+        .status(500)
+        .json({ error: "⚠ Oops, une erreur s'est produite ! " + error })
     );
 };
 
 module.exports.logout = (req, res) => {
-  const { token } = req.body;
-  refreshTokens = refreshTokens.filter((token) => t !== token);
-
-  return res.send("Logout successful");
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/");
+  //return res.send("Logout successful");
 };

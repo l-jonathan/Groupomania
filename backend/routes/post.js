@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 const postCtrl = require("../controllers/post");
 
 // CRUD POSTS
-router.get("/", auth, postCtrl.readPost);
+router.get("/", postCtrl.readPost);
 router.post("/", auth, postCtrl.createPost);
 router.put("/:id", auth, postCtrl.updatePost);
 router.delete("/:id", auth, postCtrl.deletePost);

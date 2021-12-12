@@ -45,7 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       profession: DataTypes.STRING,
       userDescription: DataTypes.STRING,
-      profilePhoto: DataTypes.STRING,
+      profilePhoto: { 
+        type: DataTypes.STRING,
+        defaultValue: "./uploads/profil/random-user.png",
+      },
       isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,

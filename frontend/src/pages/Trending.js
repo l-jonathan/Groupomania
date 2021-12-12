@@ -1,6 +1,6 @@
 import React from 'react';
 
-const App = () => {
+const Trending = () => {
   return (
     <div>
       Hello depuis Trending
@@ -8,4 +8,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Trending;

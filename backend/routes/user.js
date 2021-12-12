@@ -2,21 +2,27 @@
 
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer();
 
 const auth = require("../middleware/auth");
 
 const userCtrl = require("../controllers/user");
+const uploadCtrl = require("../controllers/upload");
 
 // Auth
 router.post("/signup", userCtrl.signup); // FONCTIONNE
 router.post("/login", userCtrl.login); // FONCTIONNE
-router.post("/logout", userCtrl.logout); // Comment faire pour supprimer le token avec jsonwebtoken
+router.get("/logout", userCtrl.logout); // Comment faire pour supprimer le token avec jsonwebtoken
 
 // DB User
-router.get("/", auth, userCtrl.getAllUsers); //FONCTIONNE
-router.get("/:id", auth, userCtrl.getOneUser);
-//router.get("/:id", userController.getOneUser);
-router.put("/:id", auth, userCtrl.updateUser); // FONCTIONNE
-router.delete("/:id", auth, userCtrl.deleteUser); // FONCTIONNE
+router.get("/allUsers", userCtrl.getAllUsers); //FONCTIONNE
+router.get("/actualUser", userCtrl.getActualUser);
+router.get("/:id", userCtrl.getUser);
+router.put("/:id", userCtrl.updateUser); // FONCTIONNE
+router.delete("/:id", userCtrl.deleteUser); // FONCTIONNE
+
+// upload
+router.post('/upload', upload.single('file'), uploadCtrl.uploadProfil);
 
 module.exports = router;

@@ -21,13 +21,16 @@ module.exports.readPost = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res, next) => {
+  console.log('1');
   const userId = token.getUserId(req);
   try {
+    console.log('2');
     console.log("userId :" + userId);
     const user = await db.User.findOne({
       where: { id: userId },
     });
     if (user !== null) {
+      console.log('3');
       const post = await db.Post.create({
         include: [
           {
@@ -42,9 +45,11 @@ module.exports.createPost = async (req, res, next) => {
         .status(201)
         .json({ post: post, messageRetour: "Votre post est ajouté" });
     } else {
+      console.log('4');
       res.status(400).send({ error: "Erreur " });
     }
   } catch (error) {
+    console.log('5');
     return res.status(500).send({ error: "Erreur serveur" });
   }
 };

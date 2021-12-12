@@ -4,6 +4,8 @@ const express = require("express");
 const path = require("path");
 const config = require("./config/config.json");
 
+const {checkUser, requireAuth} = require('./middleware/auth.mern');
+
 //import des routers
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
@@ -28,6 +30,14 @@ app.use(express.json());
 
 // gestion ressource images
 app.use("/images", express.static(path.join(__dirname, "images")));
+
+// jwt
+app.get('*', checkUser);
+app.get('/jwtid', requireAuth, (req, res) => {
+  console.log("99999: "+res.locals.user.id);
+  const id = res.locals.user.id;
+  res.status(200).json(id);
+});
 
 // enregistrement du routeur avec racine attendue par front-end
 app.use("/api/auth", userRoutes);

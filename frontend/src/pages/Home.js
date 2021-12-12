@@ -1,11 +1,14 @@
 import React from 'react';
+import Thread from '../components/Thread';
 
-const App = () => {
+const Home = () => {
   return (
-    <div>
-      Hello depuis Home
+    <div className="home">
+      <div className="main">
+        <Thread />
+      </div>
     </div>
   );
 };
 
-export default App;
+export default Home;
