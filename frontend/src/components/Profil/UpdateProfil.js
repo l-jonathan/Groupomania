@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import UploadImg from "./UploadImg";
 import { updateDescription } from "../../actions/user.actions";
+//import UploadImg from "./UploadImg";
 import { dateParser } from "../Utils";
 
 const UpdateProfil = () => {
@@ -23,8 +23,8 @@ const UpdateProfil = () => {
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
-          {/*<img src={userData.picture} alt="user-pic" />
-          <UploadImg />
+          {<img src={userData.profilePhoto} alt="user-pic" />}
+          {/*<UploadImg />
           <p>{error.maxSize}</p>
   <p>{error.format}</p>*/}
         </div>

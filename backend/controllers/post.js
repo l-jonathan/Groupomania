@@ -6,6 +6,8 @@ const db = require("../models/index");
 const { Post } = db.sequelize.models;
 // Importation modèle Comment
 const { Comment } = db.sequelize.models;
+// Importation modèle Like
+const { Like } = db.sequelize.models;
 
 ///////////////
 // CRUD POST //
@@ -21,16 +23,12 @@ module.exports.readPost = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res, next) => {
-  console.log('1');
-  const userId = token.getUserId(req);
+  const userId = req.body.userId
   try {
-    console.log('2');
-    console.log("userId :" + userId);
     const user = await db.User.findOne({
       where: { id: userId },
     });
     if (user !== null) {
-      console.log('3');
       const post = await db.Post.create({
         include: [
           {
@@ -45,11 +43,9 @@ module.exports.createPost = async (req, res, next) => {
         .status(201)
         .json({ post: post, messageRetour: "Votre post est ajouté" });
     } else {
-      console.log('4');
       res.status(400).send({ error: "Erreur " });
     }
   } catch (error) {
-    console.log('5');
     return res.status(500).send({ error: "Erreur serveur" });
   }
 };
@@ -111,9 +107,9 @@ module.exports.createComment = async (req, res, next) => {
   try {
     const comment = req.body.content;
     const newComment = await db.Comment.create({
-      content: comment,
-      UserId: token.getUserId(req),
       PostId: req.params.id,
+      content: comment,
+      UserId: req.body.userId,
     });
 
     res
@@ -131,11 +127,10 @@ module.exports.updateComment = async (req, res) => {
       }
     : { ...req.body };
 
-  const userId = token.getUserId(req);
   const commentId = req.params.id;
 
   db.Comment.findOne({
-    where: { id: commentId, UserId: userId },
+    where: { id: commentId },
   })
     .then((commentFound) => {
       if (commentFound) {
@@ -157,16 +152,11 @@ module.exports.updateComment = async (req, res) => {
 
 module.exports.deleteComment = async (req, res) => {
   try {
-    const userId = token.getUserId(req);
     //const checkAdmin = await db.User.findOne({ where: { id: userId } });
     const comment = await db.Comment.findOne({ where: { id: req.params.id } });
 
-    if (userId === comment.UserId /* || checkAdmin.admin === true*/) {
-      db.Comment.destroy({ where: { id: req.params.id } }, { truncate: true });
-      res.status(200).json({ message: "commentaire supprimé" });
-    } else {
-      res.status(400).json({ message: "Vous n'avez pas les droits requis" });
-    }
+    db.Comment.destroy({ where: { id: req.params.id } }, { truncate: true });
+    res.status(200).json({ message: "commentaire supprimé" });
   } catch (error) {
     return res.status(500).send({ error: "Erreur serveur" });
   }
@@ -177,19 +167,23 @@ module.exports.deleteComment = async (req, res) => {
 //////////
 
 module.exports.likePost = async (req, res, next) => {
-  try {
-    const userId = token.getUserId(req);
-    const postId = req.params.id;
+    try {
+    console.log("1");
+    const userId = req.body.userId;
+    const postId = req.body.postId;
     const user = await db.Like.findOne({
       where: { UserId: userId, PostId: postId },
     });
+    console.log("USEEER: "+user);
     if (user) {
+      console.log("2");
       await db.Like.destroy(
         { where: { UserId: userId, PostId: postId } },
         { truncate: true, restartIdentity: true }
       );
       res.status(200).send({ messageRetour: "vous n'aimez plus ce post" });
     } else {
+      console.log("3");
       await db.Like.create({
         UserId: userId,
         PostId: postId,
@@ -197,6 +191,16 @@ module.exports.likePost = async (req, res, next) => {
       res.status(201).json({ messageRetour: "vous aimez ce post" });
     }
   } catch (error) {
+    console.log("4");
     return res.status(500).send({ error: "Utilisateur ou post non trouvé" });
+  }
+};
+
+module.exports.readLike = async (req, res, next) => {
+  try {
+    var likes = await Like.findAll();
+    return res.status(200).json(likes);
+  } catch (err) {
+    console.log(err);
   }
 };

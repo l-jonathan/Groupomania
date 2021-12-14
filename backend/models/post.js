@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   Post.init(
     {
       content: {
-        type: DataTypes.STRING(500),
+        type: DataTypes.STRING(10000),
         allowNull: false,
       },
       picture: {

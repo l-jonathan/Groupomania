@@ -7,17 +7,18 @@ const postCtrl = require("../controllers/post");
 
 // CRUD POSTS
 router.get("/", postCtrl.readPost);
-router.post("/", auth, postCtrl.createPost);
-router.put("/:id", auth, postCtrl.updatePost);
-router.delete("/:id", auth, postCtrl.deletePost);
+router.post("/", postCtrl.createPost);
+router.put("/:id", postCtrl.updatePost);
+router.delete("/:id", postCtrl.deletePost);
 
 // CRUD COMMENTS
-router.get("/get-comment", auth, postCtrl.readComment);
-router.post("/:id/create-comment", auth, postCtrl.createComment);
-router.put("/update-comment/:id", auth, postCtrl.updateComment);
-router.delete("/delete-comment/:id", auth, postCtrl.deleteComment);
+router.get("/get-comment", postCtrl.readComment);
+router.post("/:id/create-comment", postCtrl.createComment);
+router.put("/update-comment/:id", postCtrl.updateComment);
+router.delete("/delete-comment/:id", postCtrl.deleteComment);
 
 // LIKE
-router.post("/:id/like", auth, postCtrl.likePost);
+router.get("/like", postCtrl.readLike);
+router.post("/:id/like", postCtrl.likePost);
 
 module.exports = router;
