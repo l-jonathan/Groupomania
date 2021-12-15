@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isEmpty } from "../Utils";
 import { addPost, getPosts } from "../../actions/post.actions";
 
 const NewPostForm = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [content, setContent] = useState("");
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
@@ -22,16 +20,8 @@ const NewPostForm = () => {
     setContent("");
   };
 
-  useEffect(() => {
-    if (isEmpty(userData)) setIsLoading(false);
-  }, [userData]);
-
   return (
     <div className="post-container">
-      {isLoading ? (
-        <i className="fa fa-spinner fa-pulse"></i>
-      ) : (
-        <>
           <div className="post-form">
             <textarea
               name="content"
@@ -42,19 +32,15 @@ const NewPostForm = () => {
             />
             <div className="footer-form">
               <div className="btn-send">
-                {content ? (
                   <button className="cancel" onClick={cancelPost}>
                     Annuler
                   </button>
-                ) : null}
                 <button className="send" onClick={handlePost}>
                   Envoyer
                 </button>
               </div>
             </div>
           </div>
-        </>
-      )}
     </div>
   );
 };

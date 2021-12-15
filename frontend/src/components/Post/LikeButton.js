@@ -19,11 +19,16 @@ const LikeButton = ({ post }) => {
     setLiked(false);
   };
 
-  /*useEffect(() => {
-    console.log("like userId: "+likeData.includes(userData.id));
-    if (likeData.includes(userData.id)) setLiked(true);
-    else setLiked(false);
-  }, [userData.id, likeData, liked]);*/
+  useEffect(() => {
+    for (var i = 0; i < likeData.length; i++) {
+      /*console.log("UserId: " + userData.id);
+      console.log("likeData[i].userId: " + likeData[i].UserId);
+      console.log("PostId: " + post.id);
+      console.log("likeData[i].postId: " + likeData[i].PostId);*/
+      if (likeData[i].UserId === userData.id && likeData[i].PostId === post.id) {
+        return setLiked(true)
+      } else return setLiked(false);
+  }}, [userData.id, likeData, post.id, liked]);
 
   return (
     <div className="like-container">

@@ -1,33 +1,41 @@
+////////////////////////////////////////////////////////////
+//////////// MODULE FOR POST - COMMENTS - LIKES ////////////
+////////////////////////////////////////////////////////////
+
 // Importation config database avec ORM Sequelize
-const token = require("../middleware/token");
 const db = require("../models/index");
 
-// Importation modèle Post
+// Import POST Model
 const { Post } = db.sequelize.models;
-// Importation modèle Comment
+// Import COMMENT Model
 const { Comment } = db.sequelize.models;
-// Importation modèle Like
+// Import Like Model
 const { Like } = db.sequelize.models;
 
 ///////////////
 // CRUD POST //
 ///////////////
 
+// Display all posts
 module.exports.readPost = async (req, res) => {
   try {
-    var posts = await Post.findAll();
+    var posts = await Post.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     return res.status(200).json(posts);
   } catch (err) {
     console.log(err);
   }
 };
 
+// Create a new post
 module.exports.createPost = async (req, res, next) => {
-  const userId = req.body.userId
+  const userId = req.body.userId;
   try {
     const user = await db.User.findOne({
       where: { id: userId },
     });
+    // Verify if the user exist
     if (user !== null) {
       const post = await db.Post.create({
         include: [
@@ -50,6 +58,7 @@ module.exports.createPost = async (req, res, next) => {
   }
 };
 
+// Update a post
 module.exports.updatePost = async (req, res) => {
   const postObject = req.file
     ? {
@@ -78,12 +87,13 @@ module.exports.updatePost = async (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// Delete a post
 module.exports.deletePost = async (req, res) => {
   try {
     const postId = req.params.id;
     const post = await db.Post.findOne({ where: { id: postId } });
     db.Post.destroy({ where: { id: postId } }); // on supprime le compte
-    res.status(200).json({ messageRetour: "post supprimé" });
+    res.status(200).json({ messageRetour: "Votre post a bien été supprimé !" });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: "Erreur serveur" });
@@ -94,6 +104,7 @@ module.exports.deletePost = async (req, res) => {
 // CRUD COMMENT //
 //////////////////
 
+// Display all comments
 module.exports.readComment = async (req, res) => {
   try {
     var comments = await Comment.findAll();
@@ -103,6 +114,7 @@ module.exports.readComment = async (req, res) => {
   }
 };
 
+// Create a new comment
 module.exports.createComment = async (req, res, next) => {
   try {
     const comment = req.body.content;
@@ -111,15 +123,16 @@ module.exports.createComment = async (req, res, next) => {
       content: comment,
       UserId: req.body.userId,
     });
-
-    res
-      .status(201)
-      .json({ newComment, messageRetour: "votre commentaire est publié" });
+    res.status(201).json({
+      newComment,
+      messageRetour: "Votre commentaire a bien été publié",
+    });
   } catch (error) {
     return res.status(500).send({ error: "Erreur serveur" });
   }
 };
 
+// Update a comment
 module.exports.updateComment = async (req, res) => {
   const commentObject = req.file
     ? {
@@ -150,13 +163,14 @@ module.exports.updateComment = async (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// Delete a comment
 module.exports.deleteComment = async (req, res) => {
   try {
     //const checkAdmin = await db.User.findOne({ where: { id: userId } });
     const comment = await db.Comment.findOne({ where: { id: req.params.id } });
 
     db.Comment.destroy({ where: { id: req.params.id } }, { truncate: true });
-    res.status(200).json({ message: "commentaire supprimé" });
+    res.status(200).json({ message: "Votre commentaire a bien été supprimé" });
   } catch (error) {
     return res.status(500).send({ error: "Erreur serveur" });
   }
@@ -166,24 +180,23 @@ module.exports.deleteComment = async (req, res) => {
 // LIKE //
 //////////
 
+// Like and Dislike
 module.exports.likePost = async (req, res, next) => {
-    try {
-    console.log("1");
+  try {
     const userId = req.body.userId;
     const postId = req.body.postId;
     const user = await db.Like.findOne({
       where: { UserId: userId, PostId: postId },
     });
-    console.log("USEEER: "+user);
     if (user) {
-      console.log("2");
+      // If like exist => Dislike
       await db.Like.destroy(
         { where: { UserId: userId, PostId: postId } },
         { truncate: true, restartIdentity: true }
       );
       res.status(200).send({ messageRetour: "vous n'aimez plus ce post" });
     } else {
-      console.log("3");
+      // If like doesn't exist => Like
       await db.Like.create({
         UserId: userId,
         PostId: postId,
@@ -191,11 +204,11 @@ module.exports.likePost = async (req, res, next) => {
       res.status(201).json({ messageRetour: "vous aimez ce post" });
     }
   } catch (error) {
-    console.log("4");
     return res.status(500).send({ error: "Utilisateur ou post non trouvé" });
   }
 };
 
+// Display all likes
 module.exports.readLike = async (req, res, next) => {
   try {
     var likes = await Like.findAll();

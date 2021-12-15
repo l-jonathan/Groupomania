@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const SignUpForm = () => {
@@ -6,7 +7,10 @@ const SignUpForm = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [controlPassword, setControlPassword] = useState("");
+
+  const usersData = useSelector((state) => state.usersReducer);
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -21,17 +25,25 @@ const SignUpForm = () => {
     passwordConfirmError.innerHTML = "";
     passwordError.innerHTML = "";
 
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (password !== controlPassword || passwordRegex.test(password) === false || emailRegex.test(email) === false) {
+    const passwordRegex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (
+      password !== controlPassword ||
+      passwordRegex.test(password) === false ||
+      emailRegex.test(email) === false
+    ) {
       if (emailRegex.test(email) === false) {
         emailError.innerHTML = "L'email est incorrect";
       }
       if (passwordRegex.test(password) === false) {
-        passwordError.innerHTML = "Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial";
+        passwordError.innerHTML =
+          "Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial";
       }
       if (password !== controlPassword) {
-        passwordConfirmError.innerHTML = "Les mots de passe ne correspondent pas";
+        passwordConfirmError.innerHTML =
+          "Les mots de passe ne correspondent pas";
       }
     } else {
       axios({
@@ -43,6 +55,7 @@ const SignUpForm = () => {
           lastName,
           email,
           password,
+          isAdmin,
         },
       })
         .then((res) => {
@@ -117,6 +130,18 @@ const SignUpForm = () => {
         value={controlPassword}
       />
       <div className="password-confirm error"></div>
+      <br />
+      {usersData.length === 0 ? (
+        <>
+          <input
+            type="checkbox"
+            id="isAdmin"
+            onChange={(e) => setIsAdmin(!isAdmin)}
+          />
+          <label htmlFor="isAdmin">Cocher pour être Administrateur</label>
+          <br />
+        </>
+      ) : null}
       <br />
       <input type="submit" value="S'inscrire" />
     </form>

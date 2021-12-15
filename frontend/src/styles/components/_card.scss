@@ -1,10 +1,10 @@
 .card-container {
   display: grid;
   grid-template-columns: 66px 1fr;
-  border: 2px solid $color-2;
+  box-shadow: inset 0px 0px 5px 0px $color-1;
   margin: 10px;
   padding: 16px;
-  border-radius: 20px;
+  border-radius: 6px;
   margin: 8px auto;
   position: relative;
   min-height: 100px;
@@ -28,8 +28,7 @@
     img {
       height: 52px;
       width: 52px;
-      border-radius: 20px;
-      box-shadow: 1px 1px 3px rgba(51, 51, 51, 0.192);
+      border-radius: 50px;
       object-fit: cover;
 
       @media screen and(max-width: 590px) {
@@ -291,7 +290,7 @@
           }
           input[type="text"] {
             margin: 4px 0;
-            background: $white;
+            background: $color-2;
             font-size: 1.15rem;
             padding: 16px;
             width: 100%;

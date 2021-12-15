@@ -13,13 +13,12 @@ const Card = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
-  //const commentsData = useSelector((state) => state.commentsReducer);
 
   const dispatch = useDispatch();
 
   const updateItem = () => {
     if (textUpdate) {
-      console.log('TextUpdate postId: ' + post.id);
+      console.log("TextUpdate postId: " + post.id);
       dispatch(updatePost(post.id, textUpdate));
     }
     setIsUpdated(false);
@@ -81,7 +80,7 @@ const Card = ({ post }) => {
             {post.picture && (
               <img src={post.picture} alt="card-pic" className="card-pic" />
             )}
-            {userData.id === post.UserId && (
+            {(userData.id === post.UserId || userData.isAdmin === true) && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="Edit" />
@@ -91,18 +90,12 @@ const Card = ({ post }) => {
             )}
             <div className="card-footer">
               <div className="comment-icon">
-                <img onClick={() => setShowComments(!showComments)} src="./img/icons/message1.svg" alt="comment" />
-                <span>nbComment
-                  {/*!isEmpty(commentsData[0]) &&
-                    commentsData.map((comment) => {
-                      var j=0;
-                          if (commentsData.PostId === post.id)
-                           return j++;
-                      return "/ post.id: " + post.id + " comment.PostId: " + comment.PostId + " j= " + j + "/";
-                      // commentsDate.length = 5 // VRAI
-
-                    })*/}
-                </span>
+                <img
+                  onClick={() => setShowComments(!showComments)}
+                  src="./img/icons/message1.svg"
+                  alt="comment"
+                />
+                <span>Voir les commentaires</span>
               </div>
               <LikeButton post={post} />
             </div>

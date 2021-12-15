@@ -16,7 +16,7 @@ const Navbar = () => {
             <NavLink exact to="/home">
               <div className="logo">
                 <img
-                  src="./img/icon-left-font-monochrome-black.svg"
+                  src="./img/icon-left-font-monochrome-white.svg"
                   alt="icon"
                 />
               </div>
@@ -38,7 +38,7 @@ const Navbar = () => {
             <NavLink exact to="/">
               <div className="logo">
                 <img
-                  src="./img/icon-left-font-monochrome-black.svg"
+                  src="./img/icon-left-font-monochrome-white.svg"
                   alt="icon"
                 />
               </div>

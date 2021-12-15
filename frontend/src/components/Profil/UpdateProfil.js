@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateDescription } from "../../actions/user.actions";
 //import UploadImg from "./UploadImg";
 import { dateParser } from "../Utils";
+import DeleteProfil from "./DeleteProfil";
 
 const UpdateProfil = () => {
   const [userDescription, setDescription] = useState("");
@@ -51,6 +52,7 @@ const UpdateProfil = () => {
             )}
           </div>
           <h4>Membre depuis le : {dateParser(userData.createdAt)}</h4>
+          <DeleteProfil id={userData.id} />
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ export const getPosts = () => {
   return (dispatch) => {
     return axios
       .get(`${process.env.REACT_APP_API_URL}api/post/`)
+      //.orderBy([updatedAt], 'desc')
       .then((res) => {
         dispatch({ type: GET_POSTS, payload: res.data });
       })
