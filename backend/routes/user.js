@@ -1,16 +1,20 @@
-//----------------------- fichier présentant les routes user disponibles -----------------------//
+/////////////////////////////////////////////////////////////
+/////////////        AUTH - USERS ROUTES        /////////////
+/////////////////////////////////////////////////////////////
 
+// Creation of router
 const express = require("express");
 const router = express.Router();
 
+// Import users controllers
 const userCtrl = require("../controllers/user");
 
-// Auth
+// AUTHENTIFICATION
 router.post("/signup", userCtrl.signup); // FONCTIONNE
 router.post("/login", userCtrl.login); // FONCTIONNE
 router.get("/logout", userCtrl.logout); // Comment faire pour supprimer le token avec jsonwebtoken
 
-// DB User
+// CRUD USER
 router.get("/allUsers", userCtrl.getAllUsers); //FONCTIONNE
 router.get("/actualUser", userCtrl.getActualUser);
 router.get("/:id", userCtrl.getUser);

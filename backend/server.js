@@ -1,10 +1,13 @@
-//----------------------- code du serveur  -----------------------//
+/////////////////////////////////////////////////////////////
+/////////////              SERVER               /////////////
+/////////////////////////////////////////////////////////////
 
+// Import dependancies
 const http = require("http");
 const app = require("./app");
 const config = require("./config/config.json");
 
-// fonction qui renvoi un port valide, qu'il soit fourni sous forme d'un numéro ou d'une chaine
+// Return a usable port
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
@@ -16,11 +19,12 @@ const normalizePort = (val) => {
   }
   return false;
 };
-// on écoute la variable d'env du port ou le port 3000
+
+// Listen the environment variable or PORT 3000
 const port = normalizePort(config.PORT || "3000");
 app.set("port", port);
 
-// fonction qui recherche les différentes erreurs et les gère
+// Check errors and deal with it
 const errorHandler = (error) => {
   if (error.syscall !== "listen") {
     throw error;
@@ -42,10 +46,10 @@ const errorHandler = (error) => {
   }
 };
 
-// on passe l'application express au serveur, exécuté à chaque appel vers le serveur
+// Creation of server with the app
 const server = http.createServer(app);
 
-// écouteur d'évènements, consigne le port ou le canal nommé sur lequel le serveur s'exécute dans la console
+// Events listener
 server.on("error", errorHandler);
 server.on("listening", () => {
   const address = server.address();

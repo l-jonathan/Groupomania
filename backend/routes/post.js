@@ -1,8 +1,12 @@
+////////////////////////////////////////////////////////////
+/////////////   POST - COMMENT - LIKE ROUTES   /////////////
+////////////////////////////////////////////////////////////
+
+// Creation of router
 const express = require("express");
 const router = express.Router();
 
-const auth = require("../middleware/auth");
-
+// Import post controllers
 const postCtrl = require("../controllers/post");
 
 // CRUD POSTS

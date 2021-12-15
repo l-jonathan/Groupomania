@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////
+/////////////            POST'S MODEL           /////////////
+/////////////////////////////////////////////////////////////
+
 "use strict";
 const { Model } = require("sequelize");
 
@@ -17,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       }),
         models.Post.hasMany(models.Comment);
-        models.Post.hasMany(models.Like);
+      models.Post.hasMany(models.Like);
     }
   }
   Post.init(

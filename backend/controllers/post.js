@@ -2,7 +2,7 @@
 //////////// MODULE FOR POST - COMMENTS - LIKES ////////////
 ////////////////////////////////////////////////////////////
 
-// Importation config database avec ORM Sequelize
+// Import database config
 const db = require("../models/index");
 
 // Import POST Model

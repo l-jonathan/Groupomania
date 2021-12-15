@@ -1,19 +1,24 @@
-//----------------------- fichier contenant l'application Express -----------------------//
+/////////////////////////////////////////////////////////////
+/////////////        EXPRESS APPLICATION        /////////////
+/////////////////////////////////////////////////////////////
 
+// Import dependancies
 const express = require("express");
-const path = require("path");
-const config = require("./config/config.json");
 
-const {checkUser, requireAuth} = require('./middleware/auth.mern');
+// Import middleware of authentification
+const { checkUser, requireAuth } = require("./middleware/auth");
 
-//import des routers
+// Import routers
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 
+// Import models
 const db = require("./models");
+
+// Create application
 const app = express();
 
-// middleware pour résoudre problèmes de CORS et permettre l'accès à l'API
+// Resolve CORS errors
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3002");
   res.header("Access-Control-Allow-Credentials", true);
@@ -25,25 +30,21 @@ app.use((req, res, next) => {
   next();
 });
 
-//middleware global, transforme le corps de la requete en objet javascript utilisable
+// Transform request to json
 app.use(express.json());
 
-// gestion ressource images
-app.use("/images", express.static(path.join(__dirname, "images")));
-
-// jwt
-app.get('*', checkUser);
-app.get('/jwtid', requireAuth, (req, res) => {
-  console.log("99999: "+res.locals.user.id);
+// Token authentification
+app.get("*", checkUser);
+app.get("/jwtid", requireAuth, (req, res) => {
   const id = res.locals.user.id;
   res.status(200).json(id);
 });
 
-// enregistrement du routeur avec racine attendue par front-end
+// Router path, use by the frontend
 app.use("/api/auth", userRoutes);
 app.use("/api/post", postRoutes);
 
-// CREATE TABLES IF NO EXIST
+// Create tables if doesn't exists
 db.sequelize
   .sync()
   .then(() => {

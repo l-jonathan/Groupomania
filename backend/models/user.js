@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////
+/////////////           USER'S MODEL            /////////////
+/////////////////////////////////////////////////////////////
+
 "use strict";
 const { Model } = require("sequelize");
 
@@ -45,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       profession: DataTypes.STRING,
       userDescription: DataTypes.STRING,
-      profilePhoto: { 
+      profilePhoto: {
         type: DataTypes.STRING,
         defaultValue: "./uploads/profil/random-user.png",
       },
