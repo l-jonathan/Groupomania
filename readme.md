@@ -13,7 +13,6 @@
 
 ## Technologies & frameworks utilisés
 - Backend en javascript :<br />
-    - Node.js<br />
     - Express
 - Frontend en JavaScript :<br />
     - React<br />
