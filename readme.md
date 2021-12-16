@@ -10,6 +10,7 @@
 - Ouvrir un second terminal dans le dosser "frontend" :<br />
     - Effectuer la commande "npm install" pour installer les dépendances du frontend<br />
     - Effectuer la commande "npm start" pour lancer l'application
+    - Le premier utilisateur à s'inscrire aura la possibilité d'obtenir les droits d'administration
 
 ## Technologies & frameworks utilisés
 - Backend en javascript :<br />
