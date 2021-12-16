@@ -4,16 +4,19 @@
 ## Installation
 - Récupérer le projet : git clone ou zip
 - Ouvrir un terminal dans le dossier "backend" :<br />
-    -> Effectuer la commande "npm install" pour installer les dépendances du backend<br />
-    -> Si besoin modifier les informations de la base de données dans le fichier /config/config.json<br />
-    -> Effectuer la commande "npm start" pour lancer le serveur
+    - Effectuer la commande "npm install" pour installer les dépendances du backend<br />
+    - Si besoin modifier les informations de la base de données dans le fichier /config/config.json<br />
+    - Effectuer la commande "npm start" pour lancer le serveur
 - Ouvrir un second terminal dans le dosser "frontend" :<br />
-    -> Effectuer la commande "npm install" pour installer les dépendances du frontend<br />
-    -> Effectuer la commande "npm start" pour lancer l'application
+    - Effectuer la commande "npm install" pour installer les dépendances du frontend<br />
+    - Effectuer la commande "npm start" pour lancer l'application
 
 ## Technologies & frameworks utilisés
 - Backend en javascript :<br />
-    -> Node.js<br />
-    -> Express
+    - Node.js<br />
+    - Express
 - Frontend en JavaScript :<br />
-    -> React
+    - React<br />
+- Base de données :<br />
+    - MySQL
+    
