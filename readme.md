@@ -4,6 +4,7 @@
 ## Installation
 - Récupérer le projet : git clone ou zip
 - Ouvrir un terminal dans le dossier "backend" :
+<br>
     -> Effectuer la commande "npm install" pour installer les dépendances du backend
     -> Effectuer la commande "npm start" pour lancer le serveur
 - Ouvrir un second terminal dans le dosser "frontend" :
