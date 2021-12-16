@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+////////////        REDUCER - COMMENTS         ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import {
   GET_COMMENTS,
   EDIT_COMMENT,
@@ -13,18 +18,16 @@ export default function commentsReducer(state = initialState, action) {
     case EDIT_COMMENT:
       return state.map((comment) => {
         if (comment.id === action.payload.commentId) {
-          console.log("333");
           return {
             ...comment,
             content: action.payload.content,
           };
         } else {
-          console.log("444");
           return comment;
         }
       });
     case DELETE_COMMENT:
-        return state.filter((comment) => comment.id !== action.payload.commentId);
+      return state.filter((comment) => comment.id !== action.payload.commentId);
     default:
       return state;
   }

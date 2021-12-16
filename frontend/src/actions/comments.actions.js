@@ -1,10 +1,17 @@
+////////////////////////////////////////////////////////////
+////////////          COMMENTS ACTIONS          ////////////
+////////////////////////////////////////////////////////////
+
+// Import axios
 import axios from "axios";
 
+// Declaration of store actions
 export const GET_COMMENTS = "GET_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const EDIT_COMMENT = "EDIT_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 
+// Function to get all comments
 export const getComments = () => {
   return (dispatch) => {
     return axios
@@ -16,7 +23,8 @@ export const getComments = () => {
   };
 };
 
-export const addComment = (postId,content, userId) => {
+// Function to create a new comment
+export const addComment = (postId, content, userId) => {
   return (dispatch) => {
     return axios({
       method: "post",
@@ -28,9 +36,10 @@ export const addComment = (postId,content, userId) => {
       })
       .catch((err) => console.log(err));
   };
-}
+};
 
-export const editComment = ( commentId, content) => {
+// Function to update a comment
+export const editComment = (commentId, content) => {
   return (dispatch) => {
     return axios({
       method: "put",
@@ -42,9 +51,10 @@ export const editComment = ( commentId, content) => {
       })
       .catch((err) => console.log(err));
   };
-}
+};
 
-export const deleteComment = ( commentId ) => {
+// Function to delete a comment
+export const deleteComment = (commentId) => {
   return (dispatch) => {
     return axios({
       method: "delete",
@@ -56,4 +66,4 @@ export const deleteComment = ( commentId ) => {
       })
       .catch((err) => console.log(err));
   };
-}
+};

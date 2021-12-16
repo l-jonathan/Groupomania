@@ -1,12 +1,18 @@
+////////////////////////////////////////////////////////////
+////////////            USER ACTIONS            ////////////
+////////////////////////////////////////////////////////////
+
+// Import axios
 import axios from "axios";
 
+// Declaration of store actions
 export const GET_USER = "GET_USER";
 export const UPDATE_DESCR = "UPDATE_DESCR";
 export const UPDATE_PHOTO = "UPDATE_PHOTO";
 export const DELETE_PROFIL = "DELETE_PROFIL";
 
+// Function to get one user
 export const getUser = (id) => {
-  console.log("user.actions.js getUser: " + id);
   return (dispatch) => {
     return axios
       .get(`${process.env.REACT_APP_API_URL}api/auth/${id}`)
@@ -17,8 +23,8 @@ export const getUser = (id) => {
   };
 };
 
+// Function to update the description of a user
 export const updateDescription = (id, userDescription) => {
-  console.log("updateDescription: " + id + userDescription);
   return (dispatch) => {
     return axios({
       method: "put",
@@ -32,8 +38,8 @@ export const updateDescription = (id, userDescription) => {
   };
 };
 
+// Function to update the photo of a user
 export const updatePhoto = (id, profilePhoto) => {
-  console.log("updatePhoto: " + id + profilePhoto);
   return (dispatch) => {
     return axios({
       method: "put",
@@ -47,8 +53,8 @@ export const updatePhoto = (id, profilePhoto) => {
   };
 };
 
+// Function to delete a user
 export const deleteProfil = (id) => {
-  console.log("userId: " + id);
   return (dispatch) => {
     return axios({
       method: "delete",

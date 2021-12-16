@@ -1,11 +1,18 @@
+///////////////////////////////////////////////////////////
+////////////       PAGE PROFIL - DELETE        ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import React from "react";
-import { useDispatch } from 'react-redux';
-import { deleteProfil } from '../../actions/user.actions'
+import { useDispatch } from "react-redux";
+import { deleteProfil } from "../../actions/user.actions";
 
+// Function to delete the profil
 const DeleteProfil = (props) => {
-    const dispatch = useDispatch();
-    const deleteQuote = () => dispatch(deleteProfil(props.id))
+  const dispatch = useDispatch();
+  const deleteQuote = () => dispatch(deleteProfil(props.id));
 
+  // Display the form to delete the user
   return (
     <div
       onClick={() => {
@@ -14,7 +21,7 @@ const DeleteProfil = (props) => {
         }
       }}
     >
-    <button>Supprimer votre compte</button>
+      <button>Supprimer votre compte</button>
     </div>
   );
 };

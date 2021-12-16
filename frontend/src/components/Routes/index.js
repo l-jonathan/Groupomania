@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+////////////          ROUTER - INDEX           ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -8,9 +13,9 @@ import {
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
 import Profil from "../../pages/Profil";
-import Trending from "../../pages/Trending";
 import Navbar from "../Navbar";
 
+// creation of application paths
 const App = () => {
   return (
     <Router>
@@ -19,7 +24,6 @@ const App = () => {
         <Route path="/" exact component={Register} />
         <Route path="/Home" exact component={Home} />
         <Route path="/Profil" exact component={Profil} />
-        <Route path="/trending" exact component={Trending} />
         <Redirect to="/" />
       </Switch>
     </Router>

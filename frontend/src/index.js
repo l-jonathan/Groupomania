@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+////////////       INDEX OF APPLICATION        ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
@@ -10,9 +15,11 @@ import { getUsers } from "./actions/users.actions";
 import { getPosts } from "./actions/post.actions";
 import { getComments } from "./actions/comments.actions";
 import { readLike } from "./actions/like.actions";
-// dev tools
+
+// Dev tools
 import { composeWithDevTools } from "redux-devtools-extension";
 
+// Creation of the store
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))

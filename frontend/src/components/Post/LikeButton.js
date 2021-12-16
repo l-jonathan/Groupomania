@@ -1,19 +1,26 @@
+///////////////////////////////////////////////////////////
+////////////         PAGE POST - LIKES         ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getLike } from "../../actions/like.actions";
 
+// Function to like/unlike the post
 const LikeButton = ({ post }) => {
   const [liked, setLiked] = useState(false);
   const userData = useSelector((state) => state.userReducer);
- // const postData = useSelector((state) => state.postReducer);
   const likeData = useSelector((state) => state.likeReducer);
   const dispatch = useDispatch();
-  
+
+  // Function to like the post
   const like = () => {
     dispatch(getLike(post.id, userData.id));
     setLiked(true);
   };
 
+  // Function to dislike the post
   const unlike = () => {
     dispatch(getLike(post.id, userData.id));
     setLiked(false);
@@ -21,15 +28,16 @@ const LikeButton = ({ post }) => {
 
   useEffect(() => {
     for (var i = 0; i < likeData.length; i++) {
-      /*console.log("UserId: " + userData.id);
-      console.log("likeData[i].userId: " + likeData[i].UserId);
-      console.log("PostId: " + post.id);
-      console.log("likeData[i].postId: " + likeData[i].PostId);*/
-      if (likeData[i].UserId === userData.id && likeData[i].PostId === post.id) {
-        return setLiked(true)
+      if (
+        likeData[i].UserId === userData.id &&
+        likeData[i].PostId === post.id
+      ) {
+        return setLiked(true);
       } else return setLiked(false);
-  }}, [userData.id, likeData, post.id, liked]);
+    }
+  }, [userData.id, likeData, post.id, liked]);
 
+  // Display the heart empty or filled
   return (
     <div className="like-container">
       {liked === false && (

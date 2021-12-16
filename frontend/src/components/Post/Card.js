@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+////////////      PAGE POST - DISPLAY CARD     ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isEmpty, dateParser } from "../Utils";
@@ -6,6 +11,7 @@ import DeleteCard from "./DeleteCard";
 import CardComment from "./CardComment";
 import { updatePost } from "../../actions/post.actions";
 
+// Function to display the card
 const Card = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdated, setIsUpdated] = useState(false);

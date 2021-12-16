@@ -1,7 +1,14 @@
+///////////////////////////////////////////////////////////
+////////////           USERS ACTIONS           ////////////
+///////////////////////////////////////////////////////////
+
+// Import axios
 import axios from "axios";
 
+// Declaration of store actions
 export const GET_USERS = "GET_USERS";
 
+// Function to get all users
 export const getUsers = () => {
   return (dispatch) => {
     return axios

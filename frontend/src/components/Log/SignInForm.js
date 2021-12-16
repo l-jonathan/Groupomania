@@ -1,58 +1,50 @@
+////////////////////////////////////////////////////////////
+////////////           PAGE FOR SIGNIN          ////////////
+////////////////////////////////////////////////////////////
+
+// Import dependencies
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 
+// Function to signin
 const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const usersData = useSelector((state) => state.usersReducer);
 
   const handleLogin = (e) => {
     e.preventDefault();
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
 
-    
-
-     /*(
-      !usersData[].email.includes(email) ||
-      !usersData.password.includes(password)
-    ) {
-      if (!usersData.email.includes(email)) {
-        emailError.innerHTML = "L'email est inconnu";
-      }
-      if (!usersData.password.includes(password)) {
-        passwordError.innerHTML = "Le mot de passe est incorrect";
-      }
-    } else {*/
-      
-      axios({
-        method: "POST",
-        url: `${process.env.REACT_APP_API_URL}api/auth/login`,
-        withCredentials: true,
-        data: {
-          email,
-          password,
-        },
-      })
-        .then((res) => {
-          if (res.data.messageMail || res.data.messagePass) {
-            if (!res.data.messagePass)
+    // Request to signin
+    axios({
+      method: "POST",
+      url: `${process.env.REACT_APP_API_URL}api/auth/login`,
+      withCredentials: true,
+      data: {
+        email,
+        password,
+      },
+    })
+      .then((res) => {
+        // Verify if mail and password is correct
+        if (res.data.messageMail || res.data.messagePass) {
+          if (!res.data.messagePass)
             emailError.innerHTML = res.data.messageMail;
-            if(!res.data.messageMail) {
-              emailError.innerHTML = "";
+          if (!res.data.messageMail) {
+            emailError.innerHTML = "";
             passwordError.innerHTML = res.data.messagePass;
-            }
-          } else {
-            window.location = "/home";
           }
-        })
-        .catch((err) => {
-          return err;
-        });
+        } else {
+          window.location = "/home";
+        }
+      })
+      .catch((err) => {
+        return err;
+      });
   };
 
+  // Display signin form
   return (
     <form action="" onSubmit={handleLogin} id="sign-up-form">
       <label htmlFor="email">E-mail</label>

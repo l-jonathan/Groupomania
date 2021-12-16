@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+////////////              NAVBAR               ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -8,6 +13,7 @@ const Navbar = () => {
   const uid = useContext(UidContext);
   const userData = useSelector((state) => state.userReducer);
 
+  // Display the navbar
   return (
     <nav>
       {uid ? (

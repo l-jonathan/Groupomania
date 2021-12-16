@@ -1,7 +1,13 @@
+////////////////////////////////////////////////////////////
+////////////           PAGE FOR SIGNUP          ////////////
+////////////////////////////////////////////////////////////
+
+// Import dependencies
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+// Function to signin
 const SignUpForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,6 +31,7 @@ const SignUpForm = () => {
     passwordConfirmError.innerHTML = "";
     passwordError.innerHTML = "";
 
+    // Verify if all fields are valid
     const passwordRegex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     const emailRegex =
@@ -46,6 +53,7 @@ const SignUpForm = () => {
           "Les mots de passe ne correspondent pas";
       }
     } else {
+      // Request to signup
       axios({
         method: "POST",
         url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
@@ -74,6 +82,7 @@ const SignUpForm = () => {
     }
   };
 
+  // Display signup form
   return (
     <form action="" onSubmit={handleSignUp} id="sign-up-form">
       <label htmlFor="firstName">Prénom</label>

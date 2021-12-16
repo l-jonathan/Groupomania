@@ -1,4 +1,9 @@
-import React, { useEffect,useState } from "react";
+///////////////////////////////////////////////////////////
+////////////              THREAD               ////////////
+///////////////////////////////////////////////////////////
+
+// Import dependencies
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../actions/post.actions";
 import Card from "./Post/Card";
@@ -14,8 +19,9 @@ const Thread = () => {
       dispatch(getPosts());
       setLoadPost(false);
     }
-  }, [loadPost, dispatch])
+  }, [loadPost, dispatch]);
 
+  // Display all posts
   return (
     <div className="thread-container">
       <ul>

@@ -1,7 +1,13 @@
-import React from 'react';
-import Thread from '../components/Thread';
-import NewPostForm from '../components/Post/NewPostForm';
+//////////////////////////////////////////////////////////
+////////////             HOME PAGE            ////////////
+//////////////////////////////////////////////////////////
 
+// Import dependencies
+import React from "react";
+import Thread from "../components/Thread";
+import NewPostForm from "../components/Post/NewPostForm";
+
+// Display the homepage
 const Home = () => {
   return (
     <div className="home">
